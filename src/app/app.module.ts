@@ -13,6 +13,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { HTTP } from '@ionic-native/http';
 
+import { HttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { httpLoaderFactory } from '../providers/setting/httpLoaderFactory';
+
 
 import { newsPage } from '../pages/news/news';
 import { HomePage } from '../pages/home/home';
@@ -28,6 +32,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AdmobFreeProvider } from '../providers/admob/admob';
 import { Network } from '@ionic-native/network';
+import { WelcomePage } from '../pages/welcome/welcome';
 
 
 @NgModule({
@@ -39,7 +44,8 @@ import { Network } from '@ionic-native/network';
     CryptoDetailsPage,
     GlobalMarketPage,
     SettingsPage,
-    watchListPage
+    watchListPage,
+    WelcomePage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +57,13 @@ import { Network } from '@ionic-native/network';
     IonicModule.forRoot(MyApp, { mode: 'md'}),
     IonicStorageModule.forRoot(),
     ComponentsModule,
-    
+    TranslateModule.forRoot({
+      loader: {
+         provide: TranslateLoader,
+         useFactory: httpLoaderFactory,
+         deps: [HttpClient]
+      }
+   }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -62,6 +74,7 @@ import { Network } from '@ionic-native/network';
     CryptoDetailsPage,
     GlobalMarketPage,
     SettingsPage,
+    WelcomePage,
     watchListPage
   ],
   providers: [
