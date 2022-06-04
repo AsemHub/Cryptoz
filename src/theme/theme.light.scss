@@ -1,14 +1,14 @@
 .light-theme {
-    $primary : #b6629d;
+    $primary : #660394;
 
     .header .toolbar-background {
-        background: linear-gradient(to right, #ac5d70, #ab689b);
+        background: linear-gradient(to right, #3e0871, #5b09ba);
     }
     page-home .mat-header-row {
         background: #f8f8f8;
         &::before {
             content: "";
-            background: linear-gradient(to right, #ac5d70, #ab689b);;
+            background: linear-gradient(to right, #480678, #6d07b7);;
             height: 3px !important;
             width: 100%;
             position: absolute;
@@ -19,7 +19,7 @@
 
     .ion-page {
         .header::after, .tabbar::before {
-          background: linear-gradient(to right, #ac5d70, #ab689b);
+          background: linear-gradient(to right, #250240, #480699);
           bottom: 0;
           height: 2px;
         }

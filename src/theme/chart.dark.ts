@@ -195,7 +195,7 @@ export const darkChartTheme = {
 
 
 export const globalChartTheme = {
-    colors: ['#A26A90','#A26272', '#A2698B', '#A26680', '#A26171'],
+    colors: ['#660394','#66039478', '#A2698B', '#A26680', '#66039478'],
     chart: {
         backgroundColor: {
             linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
