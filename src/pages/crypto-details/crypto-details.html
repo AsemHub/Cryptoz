@@ -158,21 +158,21 @@
            <div class="coin_data_icon">
             <ion-icon name="logo-facebook"></ion-icon>
            </div>
-           <span>{{coin.community_data.facebook_likes}} </span>
+           <span>{{coin.community_data?.facebook_likes}} </span>
            <span class="coin_data_name">{{'APP.CRYPTO DETAILS.LIKES' | translate}}</span>
         </ion-col>
         <ion-col>
           <div class="coin_data_icon">
              <ion-icon name="logo-twitter"></ion-icon>
           </div>
-          <span>{{coin.community_data.twitter_followers}} </span>
+          <span>{{coin.community_data?.twitter_followers}} </span>
           <span class="coin_data_name">{{'APP.CRYPTO DETAILS.FOLLOWERES' | translate}}</span>
         </ion-col>
         <ion-col>
           <div class="coin_data_icon">
              <ion-icon name="logo-reddit"></ion-icon>
           </div>
-          <span>{{coin.community_data.reddit_subscribers}} </span>
+          <span>{{coin.community_data?.reddit_subscribers}} </span>
           <span class="coin_data_name">{{'APP.CRYPTO DETAILS.SUBSICRIBERS' | translate}}</span>
         </ion-col>
       </ion-row>
