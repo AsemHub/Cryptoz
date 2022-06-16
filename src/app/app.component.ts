@@ -38,12 +38,12 @@ export class MyApp implements OnInit {
  
       this._translate.setDefaultLang("en")
 
-    this.storage.get('settings').then((settings)=>{
-      if(settings.language){
-        console.log("LANG FROM MSTORAGE", settings.language)
-        this._translate.use(settings.language);
-      }
-    })
+    //this.storage.get('settings').then((settings)=>{
+      //if(settings.language){
+        //console.log("LANG FROM MSTORAGE", settings.language)
+       // this._translate.use(settings.language);
+     // }
+   // })
     this.storage.get('isWelcomed').then((val)=>{
       if(val){
         this.rootPage= TabsPage;

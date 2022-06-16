@@ -14,13 +14,10 @@
              <img [src]="getElement(item.description[0],'img').src" alt="">
             {{item.title[0]}}
          </ion-card-title>
-         <p text-left>
-            {{getElement(item.description[0],'p').innerHTML}}
-         </p>
       </ion-card-content>
       <ion-row>
         <ion-col text-left>
-            <ng-container *ngFor="let cat of item.category.slice(0, 4);">
+          <ng-container *ngFor="let cat of item.category">
               <ion-badge >{{cat}} </ion-badge>
             </ng-container>
         </ion-col>

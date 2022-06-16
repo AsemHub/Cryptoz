@@ -9,6 +9,8 @@ import {lightChartTheme} from '../../theme/chart.light';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
 import { SettingProvider } from '../../providers/setting/setting';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AdmobFreeProvider } from '../../providers/admob/admob';
 
 
 @Component({
@@ -28,12 +30,15 @@ export class CryptoDetailsPage {
    currentLanguage = 'en'; //default lang en
    currentChartTheme  = "dark";
    currencyPrice:any= {};
+   news;
 
   constructor(public navCtrl: NavController,
              public navParams: NavParams,
              public api:ApiProvider,
              public http: Http,
              private storage: Storage,
+             private iab: InAppBrowser,
+             public admob:AdmobFreeProvider ,
              public events: Events,
              public settingProvider:SettingProvider ) {
 
@@ -50,6 +55,9 @@ export class CryptoDetailsPage {
 
       
   }
+  ionViewWillEnter(){
+    this.admob.showRandomAds();
+  }
 
   ionViewDidLoad() {
     
@@ -62,11 +70,25 @@ export class CryptoDetailsPage {
          
          
     })
-
+    this.api.getnews().then((data:any)=> {
+      console.log(data);
+      this.news = data.rss.channel[0].item;
+    });
   
 
 
   }
+  getElement(item, htmlElement) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(item,"text/html");
+    return doc.getElementsByTagName(htmlElement)[0];
+  }
+
+  openBrowser(url) {
+    const browser = this.iab.create(url, '_blank', 'location=no,shouldPauseOnSuspend=yes');
+    browser.show();
+  }
+
 
   fetchCoinChartData(){
       this.loadingChart = true;

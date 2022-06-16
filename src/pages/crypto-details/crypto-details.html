@@ -178,4 +178,30 @@
       </ion-row>
     </div>
   </div>
+  <div class="coin_news">
+    <h1 class="coin-news-title">
+      {{'APP.CRYPTO DETAILS.COIN NEWS' | translate}}
+    </h1>
+    <ion-card *ngFor="let item of news"  (click)="openBrowser(item.link[0])"  class="coin-info-card">
+      <ion-card-content>
+        <ion-card-title text-left>
+             <img [src]="getElement(item.description[0],'img').src" alt="">
+            {{item.title[0]}}
+         </ion-card-title>
+      </ion-card-content>
+      <ion-row>
+        <ion-col text-left>
+          <ng-container *ngFor="let cat of item.category">
+              <ion-badge >{{cat}} </ion-badge>
+            </ng-container>
+        </ion-col>
+        <ion-col>
+            <ion-note>
+               {{item.pubDate[0] | date}}
+            </ion-note>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
 </ion-content>
+
