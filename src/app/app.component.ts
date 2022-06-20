@@ -17,8 +17,8 @@ import { HomePage } from '../pages/home/home';
   templateUrl: 'app.html',
 })
 export class MyApp implements OnInit {
-  rootPage:any;
-  // rootPage:any = TabsPage;
+  //rootPage:any;
+  rootPage:any = TabsPage;
   theme :any = "dark" //default theme
   language :any = "en" //default theme
 

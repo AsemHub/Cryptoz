@@ -104,7 +104,7 @@
                 </ng-template>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
             <ion-col col-6 text-left>
               <span class="coin-info-name">{{'APP.CRYPTO DETAILS.(30DAYS)' | translate}}</span>
             </ion-col>
@@ -117,7 +117,7 @@
                     <span class="nbr-negative">{{coin.market_data.price_change_percentage_30d |  percent}} </span>
                 </ng-template>
             </ion-col>
-        </ion-row>
+        </ion-row> -->
         <ion-row>
           <ion-col col-6 text-left>
             <span class="coin-info-name">{{'APP.CRYPTO DETAILS.(60DAYS)' | translate}}</span>
@@ -178,11 +178,13 @@
       </ion-row>
     </div>
   </div>
-  <div class="coin_news">
-    <h1 class="coin-news-title">
-      {{'APP.CRYPTO DETAILS.COIN NEWS' | translate}}
+  <div class="coin_news" >
+    <h1 class="coin-news-title" [hidden]="(!isCategoryFound)">
+      {{'APP.CRYPTO DETAILS.COIN NEWS' | translate}} <br>
+      <span>{{coin.name}}</span>
     </h1>
     <ion-card *ngFor="let item of news"  (click)="openBrowser(item.link[0])"  class="coin-info-card">
+      <div   >
       <ion-card-content>
         <ion-card-title text-left>
              <img [src]="getElement(item.description[0],'img').src" alt="">
@@ -201,6 +203,7 @@
             </ion-note>
         </ion-col>
       </ion-row>
+    </div>
     </ion-card>
   </div>
 </ion-content>
