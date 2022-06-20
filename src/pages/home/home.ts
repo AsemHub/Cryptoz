@@ -30,7 +30,7 @@ export class HomePage {
     "current_price",
     "price_change_24",
     "price_change_7d",
-    "price_change_30d",
+    // "price_change_30d",
   ];
   dataSource = new MatTableDataSource(this.COIN_DATA);
 
@@ -121,10 +121,10 @@ export class HomePage {
             case "price_change_7d":
               return item.market_data.price_change_percentage_7d;
             // case 'price_change_14d': return item.market_data.price_change_percentage_14d;
-            case "price_change_30d":
-              return item.market_data.price_change_percentage_30d;
-            default:
-              return item[property];
+            // case "price_change_30d":
+            //   return item.market_data.price_change_percentage_30d;
+            // default:
+            //   return item[property];
           }
         };
         this.loading = false;

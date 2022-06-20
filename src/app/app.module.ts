@@ -33,6 +33,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AdmobFreeProvider } from '../providers/admob/admob';
 import { Network } from '@ionic-native/network';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { WelcomePageModule } from '../pages/welcome/welcome.module';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
     GlobalMarketPage,
     SettingsPage,
     watchListPage,
-    WelcomePage
+    //WelcomePage
   ],
   imports: [
     BrowserModule,
@@ -54,6 +55,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
     CdkTableModule,
     HttpModule,
     HttpClientModule,
+    WelcomePageModule,
     IonicModule.forRoot(MyApp, { mode: 'md'}),
     IonicStorageModule.forRoot(),
     ComponentsModule,

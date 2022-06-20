@@ -1,237 +1,260 @@
-import { ApiProvider } from './../../providers/api/api';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import * as HighCharts from 'HighCharts';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
-import {darkChartTheme} from '../../theme/chart.dark';
-import {lightChartTheme} from '../../theme/chart.light';
-import { Storage } from '@ionic/storage';
-import { Events } from 'ionic-angular';
-import { SettingProvider } from '../../providers/setting/setting';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { AdmobFreeProvider } from '../../providers/admob/admob';
-
+import { ApiProvider } from "./../../providers/api/api";
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import * as HighCharts from "HighCharts";
+import { Http } from "@angular/http";
+import "rxjs/add/operator/map";
+import { darkChartTheme } from "../../theme/chart.dark";
+import { lightChartTheme } from "../../theme/chart.light";
+import { Storage } from "@ionic/storage";
+import { Events } from "ionic-angular";
+import { SettingProvider } from "../../providers/setting/setting";
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { AdmobFreeProvider } from "../../providers/admob/admob";
 
 @Component({
-  selector: 'page-crypto-details',
-  templateUrl: 'crypto-details.html',
+  selector: "page-crypto-details",
+  templateUrl: "crypto-details.html",
 })
 export class CryptoDetailsPage {
+  //coin data
+  coin: any = {};
+  //Chart filter
+  chart_filter: any = 24; // Days
+  //Loading Chart
+  loadingChart = true;
+  is_favorite; // is a favorite coin
+  currentCurrency = "USD"; //default currency USD
+  currentLanguage = "en"; //default lang en
+  currentChartTheme = "dark";
+  currencyPrice: any = {};
+  news = [];
+  isCategoryFound = false;
 
-   //coin data
-    coin : any = {};
-   //Chart filter
-   chart_filter: any = 24 // Days
-   //Loading Chart
-   loadingChart = true;
-   is_favorite; // is a favorite coin
-   currentCurrency = 'USD'; //default currency USD
-   currentLanguage = 'en'; //default lang en
-   currentChartTheme  = "dark";
-   currencyPrice:any= {};
-   news;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public api: ApiProvider,
+    public http: Http,
+    private storage: Storage,
+    private iab: InAppBrowser,
+    public admob: AdmobFreeProvider,
+    public events: Events,
+    public settingProvider: SettingProvider
+  ) {
+    //retreive coin ID
+    this.coin = this.navParams.get("coin");
 
-  constructor(public navCtrl: NavController,
-             public navParams: NavParams,
-             public api:ApiProvider,
-             public http: Http,
-             private storage: Storage,
-             private iab: InAppBrowser,
-             public admob:AdmobFreeProvider ,
-             public events: Events,
-             public settingProvider:SettingProvider ) {
+    this.is_favorite = this.coin.is_favorite;
 
-      //retreive coin ID
-      this.coin = this.navParams.get('coin');
-   
-      this.is_favorite = this.coin.is_favorite;
-
-      //GET THE CURRENT COIN DATA
-      this.api.getCoinInfo(this.coin.id).then((data)=>{
-        this.coin = data;
-        console.log(this.coin)
-      });
-
-      
+    //GET THE CURRENT COIN DATA
+    this.api.getCoinInfo(this.coin.id).then((data) => {
+      this.coin = data;
+      console.log(this.coin);
+    });
   }
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.admob.showRandomAds();
   }
 
   ionViewDidLoad() {
-    
     this.settingProvider.settingSubject.subscribe((data) => {
       this.currentCurrency = this.settingProvider.currentSetting.currency;
       this.currentChartTheme = this.settingProvider.currentSetting.theme;
       this.currentLanguage = this.settingProvider.currentSetting.language;
       //GET chart data for  the current crypto
-      this.fetchCurrencyApi().then(()=>this.fetchCoinChartData())
-         
-         
-    })
-    this.api.getnews().then((data:any)=> {
-      console.log(data);
-      this.news = data.rss.channel[0].item;
+      this.fetchCurrencyApi().then(() => this.fetchCoinChartData());
     });
-  
-
-
+    this.api.getnewsByCoin(this.coin.name).then((data: any) => {
+      console.log("Get News data " , data);
+      this.news = data.rss.channel[0].item.reverse();
+    });
   }
   getElement(item, htmlElement) {
     var parser = new DOMParser();
-    var doc = parser.parseFromString(item,"text/html");
+    var doc = parser.parseFromString(item, "text/html");
     return doc.getElementsByTagName(htmlElement)[0];
   }
 
   openBrowser(url) {
-    const browser = this.iab.create(url, '_blank', 'location=no,shouldPauseOnSuspend=yes');
+    const browser = this.iab.create(
+      url,
+      "_blank",
+      "location=no,shouldPauseOnSuspend=yes"
+    );
     browser.show();
   }
 
-
-  fetchCoinChartData(){
-      this.loadingChart = true;
-      console.log("cryptoD", this.currentCurrency)
-      const otherPrice = this.currencyPrice[this.currentCurrency.toLowerCase()]
-      let arrayOfOtherCurrencies:any = Object.keys(this.currencyPrice);
-      
-      console.log("this.currencyPrice", this.currencyPrice)
-      console.log("arrayOfOtherCurrencies", arrayOfOtherCurrencies)
-      if(arrayOfOtherCurrencies.includes(this.currentCurrency.toLowerCase())){
-
-        this.api.getCoinChart(this.coin.id , "USD" , this.chart_filter).then((data)=>{
-          let newData = data;
-          console.log("DATA LYD CHART", newData)
-          let dataArray = newData["prices"];
-          let newPrices=[];
-          dataArray.map(e => {
-            newPrices.unshift( e[1]*otherPrice )
-          });
-          console.log("DATA LYD CHART dataArray", newPrices)
-
-          this.loadingChart = false;
-          newData["prices"]= newPrices
-          console.log("NEW DATA LYD CHART ", newData)
-
-          this.initChart(data);
-      })
-      }else{
-
-        this.api.getCoinChart(this.coin.id , this.currentCurrency , this.chart_filter).then((data)=>{
-          this.loadingChart = false;
-          this.initChart(data);
-      })
+  rssFilter(coin){
+    coin=coin.toLowerCase();
+    return this.news.filter((i) => {
+      const elArr = i.category || [];
+      const isIncludes = elArr.some(i => i.toLowerCase().includes(coin));
+      if (!this.isCategoryFound) {
+        this.isCategoryFound = isIncludes;
       }
+      return isIncludes;
+    });
   }
 
-  onFilterChange(value){
-   this.chart_filter = value;
-   this.fetchCoinChartData();
+
+  fetchCoinChartData() {
+    this.loadingChart = true;
+    console.log("cryptoD", this.currentCurrency);
+    const otherPrice = this.currencyPrice[this.currentCurrency.toLowerCase()];
+    let arrayOfOtherCurrencies: any = Object.keys(this.currencyPrice);
+
+    console.log("this.currencyPrice", this.currencyPrice);
+    console.log("arrayOfOtherCurrencies", arrayOfOtherCurrencies);
+    if (arrayOfOtherCurrencies.includes(this.currentCurrency.toLowerCase())) {
+      this.api
+        .getCoinChart(this.coin.id, "USD", this.chart_filter)
+        .then((data) => {
+          let newData = data;
+          console.log("DATA LYD CHART", newData);
+          let dataArray = newData["prices"];
+          let newPrices = [];
+          dataArray.map((e) => {
+            newPrices.unshift(e[1] * otherPrice);
+          });
+          console.log("DATA LYD CHART dataArray", newPrices);
+
+          this.loadingChart = false;
+          newData["prices"] = newPrices;
+          console.log("NEW DATA LYD CHART ", newData);
+
+          this.initChart(data);
+        });
+    } else {
+      this.api
+        .getCoinChart(this.coin.id, this.currentCurrency, this.chart_filter)
+        .then((data) => {
+          this.loadingChart = false;
+          this.initChart(data);
+        });
+    }
   }
 
-  toggleFavorite(){
-      this.storage.get('favorites').then((val)=>{
-         let favorites = [];
-         //check if the coin is not favorite
-         //if it's not a favorite coin, add to localstorage
-         if(!this.is_favorite) {
-              //check if favorites exist
-              if(val) {
-                favorites = val;
-                if(favorites.indexOf(this.coin.id) == -1) {
-                    favorites.push(this.coin);
-                }
-              } else {
-                favorites.push(this.coin);
-              }
-              this.is_favorite = true;
-              this.storage.set('favorites',favorites);
-         } else {
-             favorites = val.filter((f)=>{
-               return f.id !== this.coin.id;
-             });
-             this.is_favorite = false;
-             this.storage.set('favorites',favorites);
-         }
-      })
+  onFilterChange(value) {
+    this.chart_filter = value;
+    this.fetchCoinChartData();
   }
 
-  ionViewDidLeave(){
-    this.events.publish('toggle_favorite',this.coin.id,this.is_favorite);
+  toggleFavorite() {
+    this.storage.get("favorites").then((val) => {
+      let favorites = [];
+      //check if the coin is not favorite
+      //if it's not a favorite coin, add to localstorage
+      if (!this.is_favorite) {
+        //check if favorites exist
+        if (val) {
+          favorites = val;
+          if (favorites.indexOf(this.coin.id) == -1) {
+            favorites.push(this.coin);
+          }
+        } else {
+          favorites.push(this.coin);
+        }
+        this.is_favorite = true;
+        this.storage.set("favorites", favorites);
+      } else {
+        favorites = val.filter((f) => {
+          return f.id !== this.coin.id;
+        });
+        this.is_favorite = false;
+        this.storage.set("favorites", favorites);
+      }
+    });
+  }
+
+  ionViewDidLeave() {
+    this.events.publish("toggle_favorite", this.coin.id, this.is_favorite);
   }
 
   initChart(Data) {
-      HighCharts.theme = (this.currentChartTheme == 'dark') ? darkChartTheme : lightChartTheme;
-      HighCharts.setOptions(HighCharts.theme);
-      HighCharts.chart('chart-container', {
-        chart: {
-          zoomType: 'x'
-        },
+    HighCharts.theme =
+      this.currentChartTheme == "dark" ? darkChartTheme : lightChartTheme;
+    HighCharts.setOptions(HighCharts.theme);
+    HighCharts.chart("chart-container", {
+      chart: {
+        zoomType: "x",
+      },
+      title: {
+        text:
+          this.coin.name +
+          " Price Chart (" +
+          this.currentCurrency.toUpperCase() +
+          ")",
+      },
+      subtitle: {
+        text:
+          document.ontouchstart === undefined
+            ? "Click and drag in the plot area to zoom in"
+            : "Pinch the chart to zoom in",
+      },
+      xAxis: {
+        type: "datetime",
+      },
+      yAxis: {
         title: {
-          text: this.coin.name + ' Price Chart ('+this.currentCurrency.toUpperCase()+')'
+          text: "Price",
         },
-        subtitle: {
-          text: document.ontouchstart === undefined ?
-              'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-        },
-        xAxis: {
-          type: 'datetime'
-        },
-        yAxis: {
-          title: {
-            text: 'Price'
-          }
-        },
-        legend: {
-          enabled: false
-        },
-        plotOptions: {
-          area: {
-            fillColor: {
-              linearGradient: {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 1
-              },
-              stops: [
-                [0, HighCharts.getOptions().colors[0]],
-                [1, HighCharts.Color(HighCharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-              ]
+      },
+      legend: {
+        enabled: false,
+      },
+      plotOptions: {
+        area: {
+          fillColor: {
+            linearGradient: {
+              x1: 0,
+              y1: 0,
+              x2: 0,
+              y2: 1,
             },
-            marker: {
-              radius: 2
-            },
-            lineWidth: 1,
-            states: {
-              hover: {
-                lineWidth: 1
-              }
-            },
-            threshold: null
-          }
-        },
-        tooltip: {
-          pointFormat: "Price : {point.y:.2f}"
+            stops: [
+              [0, HighCharts.getOptions().colors[0]],
+              [
+                1,
+                HighCharts.Color(HighCharts.getOptions().colors[0])
+                  .setOpacity(0)
+                  .get("rgba"),
+              ],
+            ],
           },
-        series: [{
-          type: 'area',
-          data: Data.prices
-        }]
-      });
+          marker: {
+            radius: 2,
+          },
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1,
+            },
+          },
+          threshold: null,
+        },
+      },
+      tooltip: {
+        pointFormat: "Price : {point.y:.2f}",
+      },
+      series: [
+        {
+          type: "area",
+          data: Data.prices,
+        },
+      ],
+    });
   }
   fetchCurrencyApi() {
     return new Promise((resolve) => {
-      this.api.getCurrency().then(e=>{
+      this.api.getCurrency().then((e) => {
         this.currencyPrice = e;
         resolve(true);
-      })
+      });
     });
-
   }
-  highLowDetails(currency,usdPrice){
-    console.log("cuurency out element", usdPrice)
-    return this.currencyPrice[currency]*usdPrice
+  highLowDetails(currency, usdPrice) {
+    console.log("cuurency out element", usdPrice);
+    return this.currencyPrice[currency] * usdPrice;
   }
 }

@@ -15,7 +15,7 @@ export class SettingProvider {
   constructor(private storage : Storage) {
     //initial default settings 
     this.currentSetting = {
-      theme : 'dark',
+      theme : 'light',
       currency : 'USD',
       language :'en'
     };

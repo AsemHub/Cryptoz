@@ -6,6 +6,7 @@ import * as x2js  from 'xml2js';
 
 const default_api_url = "https://api.coingecko.com/api/v3";
 const default_news_rss = "https://cointelegraph.com/rss";
+const default_news_rss_by_coin = "https://cointelegraph.com/rss/tag/";
 
 @Injectable()
 export class ApiProvider {
@@ -67,6 +68,26 @@ export class ApiProvider {
       headers.append('Content-type', 'application/xml');
 
         this.http.get(default_news_rss, {responseType : 'text' , headers: headers })
+        .subscribe((data)=>{
+          console.log('RSS DATA', data)
+              x2js.parseString(data, {trim: true}, function (err, result) {
+                  resolve(result);
+              });
+          }, (e) => {
+            console.log("FOUND THE PROBLEM")
+              // reject(e);
+          })
+     })
+  }
+  getnewsByCoin(coin) {
+    return new Promise((resolve, reject)=> {
+      var headers = new HttpHeaders();
+      const uri = default_news_rss_by_coin+coin
+      headers.append('Access-Control-Allow-Origin' , '*');
+      headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+      headers.append('Content-type', 'application/xml');
+
+        this.http.get(uri, {responseType : 'text' , headers: headers })
         .subscribe((data)=>{
           console.log('RSS DATA', data)
               x2js.parseString(data, {trim: true}, function (err, result) {
