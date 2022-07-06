@@ -1,0 +1,97 @@
+page-crypto-details {
+  .btn-favorite{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    margin-top: 8px;
+  }
+  .btn-favorite-set{
+    background: white !important;
+    color: #2e5433;
+    
+  }
+  .content {
+    text-align: center;
+  }
+  .crypto-price{
+    font-size: 45px;
+  }
+  .coin-green{
+    color:#58e858;
+  }
+  .coin-red{
+    color:#f54747;
+  }
+  .crypto-info span{
+    display: block;
+  }
+  .coin-info-detail {
+    font-size: 14px;
+    color: #aca9bb;
+  }
+  .coin-info-card  {
+    padding: 15px 0;
+    *{
+      font-size: 17px;
+    }
+    .row {
+      margin : 10px 0;
+    }
+  }
+  .toolbar-title{
+    position: absolute;
+    right: 24px;
+    text-align: center;
+    .crypto_symbol{
+      display: block;
+      font-size: 11px;
+      font-weight: normal;
+    }
+  }
+
+
+  .coin_community_data{
+    ion-icon{
+      font-size: 2em;
+    }
+    .coin_data_name{
+      display: block;
+      font-size: 14px;
+      color: #3e0682;
+    }
+  }
+
+  .mat-button-toggle-group {
+    *{
+      color: white;
+      font-size: 12px;
+    }
+    border: solid 2px #55059f;
+    .mat-button-toggle-checked {
+      background-color: #2e0765;
+      color:white;
+    }
+  }
+
+  .content {
+    text-align: center;
+  }
+  .badge{
+    background: #660394;
+    border-radius: 27px;
+    margin-bottom: 9px;
+  }
+  .card-title{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    font-size: 18px;
+
+    img {
+      width: 100px;
+      align-self: center;
+      margin-right: 10px;
+    }
+  }
+
+}

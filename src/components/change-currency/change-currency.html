@@ -1,0 +1,6 @@
+<span  class="current-currency">current currency</span>
+<div class="row">
+        <i [class]="getFlag()"></i>
+        <span>{{settingsProvider.currentSetting.currency}} </span>
+        <span (click)="pushSetting()" class="currency-change">Change</span>
+</div>

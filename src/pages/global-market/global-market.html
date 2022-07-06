@@ -1,0 +1,49 @@
+
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title text-center>
+        <ion-icon name="ios-stats" ></ion-icon>
+        {{'APP.HOME.GLOBAL MARKET' | translate}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding-top>
+
+  <change-currency></change-currency>
+
+  <div class="coin-card-pink" padding>
+    <h1>{{total_market_cap | currency:currentCurrency}}</h1>
+    <span>{{'APP.HOME.TOTAL MARKET CAPITALIZATION' | translate}}</span>
+    <h1>{{total_volume | currency:currentCurrency}}</h1>
+      <span>{{'APP.HOME.TOTAL VALUME' | translate}}</span>
+  </div>
+
+  <div class="coin-card-pink" padding>
+      <h6>{{'APP.HOME.CRYPTOCURRENCIES' | translate}}</h6>
+      <ion-row justify-content-center>
+        <ion-col>
+            <h1>{{active_cryptocurrencies }}</h1>
+            <span>{{'APP.HOME.ACTIVE' | translate}}</span>
+        </ion-col>
+        <ion-col>
+            <h1>{{upcoming_icos }}</h1>
+            <span>{{'APP.HOME.UPCOMING' | translate}}</span>
+        </ion-col>
+        <ion-col>
+            <h1>{{ongoing_icos }}</h1>
+            <span>{{'APP.HOME.ONGOING' | translate}}</span>
+        </ion-col>
+        <ion-col>
+            <h1>{{ended_icos }}</h1>
+            <span>{{'APP.HOME.ENDED' | translate}}</span>
+        </ion-col>
+      </ion-row>
+  </div>
+  
+    <div id="chart-capitalization" style="display: block;"></div>
+  <div class="con-card">
+    <h1>{{'APP.HOME.MARKET SHARE' | translate}}</h1>
+    <div id="chart-market-shares" style="display: block;"></div>
+  </div>
+</ion-content>

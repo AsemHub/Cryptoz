@@ -1,0 +1,51 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title text-center>
+      <ion-icon name="ios-cog-outline"></ion-icon>
+      {{'APP.HOME.SETTINGS' | translate}}
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list class="list-setting">
+      <ion-list-header>
+        {{'APP.HOME.GENERAL SETTINGS' | translate}}
+      </ion-list-header>
+      <ion-item>
+          <ion-label>{{'APP.HOME.THEME' | translate}}</ion-label>
+         <ion-toggle  [(ngModel)]="isDarkTheme" (ionChange)="updateTheme()" checked="false"></ion-toggle>
+      </ion-item>
+      <ion-item class="item-currency"> 
+          <ion-label>{{'APP.HOME.CURRENCY' | translate}}</ion-label>
+          <ion-select  [selectOptions]="{cssClass : 'select-currency'}" (ionChange)="changeCurrentCurrency()" (click)="initCurrencyIcon(currentCurrency)" [(ngModel)]="currentCurrency">
+              <ion-option  class="select-currency" *ngFor="let currency of currencyList" [value]="currency">
+                {{currency | uppercase}}
+              </ion-option>
+            </ion-select>
+      </ion-item>
+      <ion-item class="item-language"> 
+          <ion-label>{{'APP.HOME.LANGUAGE' | translate}}</ion-label>
+          <ion-select  [selectOptions]="{cssClass : 'select-language'}" (ionChange)="changeCurrentLanguage($event)" (click)="initlanguageIcon(currentLanguage)" [(ngModel)]="currentLanguage">
+              <ion-option  class="select-language" *ngFor="let language of languageList" [value]="language" >
+                {{language | uppercase}}
+              </ion-option>
+            </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-list class="list-setting">
+        <ion-list-header>
+          {{'APP.HOME.ABOUT' | translate}}
+        </ion-list-header>
+        <ion-item (click)="showAlertCredit()">
+            <ion-label>{{'APP.HOME.CREDITS' | translate}}</ion-label>
+        </ion-item>
+     </ion-list>
+
+     <h6 ion-text text-center class="credits"> {{'APP.HOME.DINARO' | translate}}</h6>
+
+</ion-content>
