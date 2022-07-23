@@ -5,8 +5,11 @@ import * as x2js  from 'xml2js';
 
 
 const default_api_url = "https://api.coingecko.com/api/v3";
-const default_news_rss = "https://cointelegraph.com/rss";
-const default_news_rss_by_coin = "https://cointelegraph.com/rss/tag/";
+//const baseUrl = "http://localhost:3000"
+const baseUrl = "https://dinarotech.herokuapp.com"
+const default_news_rss = baseUrl+"/news";
+const default_news_rss_by_coin = baseUrl+"/news";
+const default_currency_url = baseUrl+"/currency";
 
 @Injectable()
 export class ApiProvider {
@@ -82,7 +85,7 @@ export class ApiProvider {
   getnewsByCoin(coin) {
     return new Promise((resolve, reject)=> {
       var headers = new HttpHeaders();
-      const uri = default_news_rss_by_coin+coin
+      const uri = default_news_rss_by_coin+"/"+coin
       headers.append('Access-Control-Allow-Origin' , '*');
       headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
       headers.append('Content-type', 'application/xml');
@@ -105,7 +108,7 @@ export class ApiProvider {
       headers.append('Access-Control-Allow-Origin' , '*');
       headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
 
-        this.http.get('https://62376f9fb08c39a3af805515.mockapi.io/currencies', {responseType : 'json' , headers: headers })
+        this.http.get(default_currency_url, {responseType : 'json' , headers: headers })
         .subscribe((data:any)=>{
           console.log("LOADING DATA !!!",data)
           resolve(data[0])

@@ -25,7 +25,7 @@ export class CryptoDetailsPage {
   loadingChart = true;
   is_favorite; // is a favorite coin
   currentCurrency = "USD"; //default currency USD
-  currentLanguage = "en"; //default lang en
+  currentLanguage = "ar"; //default lang en
   currentChartTheme = "dark";
   currencyPrice: any = {};
   news = [];

@@ -20,7 +20,7 @@ export class MyApp implements OnInit {
   //rootPage:any;
   rootPage:any = TabsPage;
   theme :any = "dark" //default theme
-  language :any = "en" //default theme
+  language :any = "ar" //default theme
 
   constructor(private platform: Platform, 
              private  statusBar: StatusBar, 
@@ -36,7 +36,7 @@ export class MyApp implements OnInit {
   }
   ngOnInit(): void {
  
-      this._translate.setDefaultLang("en")
+      this._translate.setDefaultLang("ar")
 
     //this.storage.get('settings').then((settings)=>{
       //if(settings.language){

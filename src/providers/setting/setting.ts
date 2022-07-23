@@ -17,7 +17,7 @@ export class SettingProvider {
     this.currentSetting = {
       theme : 'light',
       currency : 'USD',
-      language :'en'
+      language :'ar'
     };
     this.settingSubject = new BehaviorSubject(this.currentSetting);
 
