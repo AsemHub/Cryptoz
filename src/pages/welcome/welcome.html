@@ -7,20 +7,33 @@
       <div class="pick">
         <h4 class="pick">اختر بلدك</h4>
       </div>
-      <ion-item class="item-currency"> 
-        <ion-label>Currency</ion-label>
-        <ion-select   [selectOptions]="{cssClass : 'select-currency'}" (ionChange)="changeCurrentCurrency()" (click)="initCurrencyIcon()" [(ngModel)]="currentCurrency">
-            <ion-option  class="select-currency" *ngFor="let currency of currencyList" [value]="currency">
-              {{currency | uppercase}}
-            </ion-option>
-          </ion-select>
-    </ion-item>
+      <ion-item class="item-currency">
+        <ion-label>البلد</ion-label>
+        <ion-select
+          [selectOptions]="{cssClass : 'select-currency'}"
+          (ionChange)="changeCurrentCurrency()"
+          (click)="initCurrencyIcon()"
+          [(ngModel)]="currentCurrency"
+        >
+          <ion-option
+            class="select-currency"
+            *ngFor="let currency of currencyList"
+            [value]="currency"
+          >
+            {{currency | uppercase}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <div class="swipe">
+        <div class="arrow"><ion-icon name="undo"></ion-icon></div>
+        اسحب إلى اليسار للمتابعة
+      </div>
     </ion-slide>
 
+
     <ion-slide class="slideBG">
-      
       <img src="assets/imgs/dinaro-1.png" />
-      
+
       <h2 class="slide2">تنويه</h2>
       <p class="slide2">
         ﻣﺼﺮف ﻟﻴﺒﻴﺎ اﻟﻤﺮﻛﺰي ﻟﻢ ﻳﺼﺪر اﻟﻘﻮاﻧﻴﻴﻦ اﻟﺘﻲ ﺗﻨﻈﻢ اﻟﻌﻤﻞ ﻓﻲ ﺳﻮق اﻟﻌﻤﻠﺎت
@@ -31,31 +44,31 @@
 
     <ion-slide class="slideBG">
       <img src="assets/imgs/dinaro-2.png" />
-      <img  class="webImg" src="assets/imgs/web.png" />
+      <img class="webImg" src="assets/imgs/web.png" />
 
       <h2 class="slide3">لماذا دينارو؟</h2>
       <p class="slide3">
         ﺗﺎﺑﻊ اﻟﺄﺳﻌﺎر واﻟﺒﻴﺎﻧﺎت اﻟﺪﻗﻴﻘﺔ
-        <br> 
+        <br />
         اﺿﺒﻂ اﻟﻤﻨﺒﻪ ﻋﻠﻰ ﺣﺪود ﻋﻠﻴﺎ ودﻧﻴﺎ ﻟﻠﺴﻌﺮ
-        <br> 
+        <br />
         ﺗﺎﺑﻊ آﺧﺮ اﻟﺄﺧﺒﺎر واﻟﻤﻘﺎﻟﺎت واﻟﺘﺤﻠﻴﻠﺎت
-        <br>
-         ﺷﺎرك ﻓﻲ اﻟﻨﻘﺎﺷﺎت واﻟﻨﺪوات 
-        
-         <br>
-         ﺷﺎرك ﻓﻲ
-        اﻟﺪورات اﻟﺘﻌﻠﻴﻤﻴﺔ واﻟﺘﺪرﻳﺒﻴﺔ
+        <br />
+        ﺷﺎرك ﻓﻲ اﻟﻨﻘﺎﺷﺎت واﻟﻨﺪوات
+
+        <br />
+        ﺷﺎرك ﻓﻲ اﻟﺪورات اﻟﺘﻌﻠﻴﻤﻴﺔ واﻟﺘﺪرﻳﺒﻴﺔ
       </p>
     </ion-slide>
 
     <ion-slide class="slideBG">
       <img src="assets/imgs/dinaro-1.png" />
-      <img  class="webImg" src="assets/imgs/web.png" />
+      <img class="webImg" src="assets/imgs/web.png" />
       <h2>هل أنت جاهر</h2>
-      <span (click)="hideWelcomePage()" > 
-               إبدأ
-        <ion-icon slot="end" name="arrow-forward"></ion-icon></span>
+      <span (click)="hideWelcomePage()">
+        إبدأ
+        <ion-icon slot="end" name="arrow-forward"></ion-icon
+      ></span>
     </ion-slide>
   </ion-slides>
 </ion-content>
